@@ -203,9 +203,4 @@ The accuracy score of the model is computed using the test set, and the trained 
 
 This project is open-source and available under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
----
-
-This documentation includes an overview of the project, technologies used, and how to set up and run the project locally. You can copy and paste this into a `README.md` file on GitHub and update the necessary URLs, and repository details as appropriate.
-
-
 
