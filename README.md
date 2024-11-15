@@ -137,7 +137,7 @@ import re
 import nltk
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.naive_bayes import MultinomialNB
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 import pickle
 
@@ -155,8 +155,19 @@ def preprocess_text(text):
 
 df['text'] = df['text'].apply(preprocess_text)
 
+#Stemming the data
+def stemming(content):
+    stemmer = nltk.SnowballStemmer("english")
+    stemmed_content = content.lower()
+    stemmed_content = stemmed_content.split()
+    stemmed_content = [stemmer.stem(word) for word in stemmed_content]
+    stemmed_content = ' '.join(stemmed_content)
+    return stemmed_content
+
+df['stemmed_content'] = df['text'].apply(stemming)
+
 # Prepare the data for training
-X = df['text']
+X = df['stemmed_content']
 y = df['target']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=2)
 
@@ -166,7 +177,7 @@ X_train = vectorizer.fit_transform(X_train)
 X_test = vectorizer.transform(X_test)
 
 # Train the model
-model = MultinomialNB()
+model = LogisticRegression()
 model.fit(X_train, y_train)
 
 # Evaluate the model
