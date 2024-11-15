@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Twitter Sentiment Anlysis</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    body, h1, form, textarea, button {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Background */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6e7dff, #8c82ff);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        /* Form Container */
+        #twitter-form {
+            background: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 12px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            outline: none;
+            resize: none;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea:focus {
+            border-color: #6e7dff;
+        }
+
+        button {
+            background-color: #6e7dff;
+            color: white;
+            font-size: 1.1em;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #4a5bb7;
+        }
+
+        /* Sentiment result */
+        #sentiment-result {
+            margin-top: 20px;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Add some responsiveness */
+        @media screen and (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            textarea {
+                height: 100px;
+            }
+
+            button {
+                font-size: 1em;
+                padding: 10px 15px;
+            }
+        }
+</style>
+
+<body>
+    <div>
+        <h1>Twitter Sentiment Anlysis</h1>
+        <form id="twitter-form">
+            <textarea id="tweet" cols="50" row="5" placeholder="Enter your tweet..."></textarea><br>
+            <button type="submit">Analyze</button>
+        </form>
+        <div id="sentiment-result"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById("twitter-form").addEventListener("submit", async function (event) {
+                event.preventDefault();
+                const tweetText = document.getElementById("tweet").value;
+                console.log('Tweet:', tweetText);  // Check the value here
+
+                // Check if the tweet is empty or contains only whitespace
+                if (!tweetText.trim()) {
+                    alert("Please enter a valid tweet.");
+                    return;
+                }
+
+                // Send request to Backend
+                const response = await fetch("http://127.0.0.1:5000/predict", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ tweet: tweetText })
+                });
+
+                // waiting for response
+                const data = await response.json();
+                document.getElementById("sentiment-result").textContent = `Sentiment: ${data.sentiment}`;
+            });
+        });
+    </script>
+</body>
+
+</html>
