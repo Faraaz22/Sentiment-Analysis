@@ -4,10 +4,10 @@ This project performs sentiment analysis on tweets using machine learning techni
 
 ## Overview
 
-The project consists of two main components:
+The project consists of three main components:
 1. **Frontend**: A simple web interface to input a tweet and display its sentiment.
 2. **Backend**: A machine learning model trained on tweet data to predict sentiment (positive or negative).
-3. **Dataset used**: Sentiment140 dataset with 1.6 million tweets https://www.kaggle.com/datasets/kazanova/sentiment140
+3. **Dataset**: Sentiment140 dataset with 1.6 million tweets https://www.kaggle.com/datasets/kazanova/sentiment140
 
 ## Table of Contents
 - [Technologies Used](#technologies-used)
@@ -53,7 +53,7 @@ To set up this project locally, follow these steps:
 4. Start the backend server. If you are using Flask (as inferred from the code):
 
    ```bash
-   python app.py
+   flask run
    ```
 
    The backend will run locally on `http://127.0.0.1:5000/`.
@@ -125,8 +125,9 @@ The model is trained using a dataset of labeled tweets with binary sentiment (0 
 
 1. **Loading Data**: The dataset is loaded using `pandas` and preprocessed.
 2. **Text Vectorization**: `TfidfVectorizer` is used to convert the text into numerical features.
-3. **Model Training**: A machine learning model, such as `MultinomialNB`, is trained using the processed text data.
-4. **Model Evaluation**: The model's accuracy is evaluated using a test dataset.
+3. **Model Training**: A machine learning model, such as `MultinomialNB(accuracy - 76%(approx))` and  `Logistic Regression(accuracy - 78%(approx))`, is trained using the 
+   processed text data.
+5. **Model Evaluation**: The model's accuracy is evaluated using a test dataset.
 
 ### Example Python Code for Model Training:
 
